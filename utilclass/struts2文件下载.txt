@@ -1,0 +1,6 @@
+<result name="success" type="stream">
+    <!--指定输入流名字-->
+    <param name="inputName">stream</param>
+    <param name="contentDisposition">attachment;filename=${filename}</param>
+    <param name="contentType">application/octet-stream</param>
+</result>
