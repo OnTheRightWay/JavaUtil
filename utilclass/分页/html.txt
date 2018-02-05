@@ -1,0 +1,55 @@
+<table border="0" cellspacing="0" cellpadding="0" align="center">
+  <tr>
+    <td align="right">
+    	<span>第${requestScope.pageBean.currentPage}/${requestScope.pageBean.totalPage}页</span>
+        <span>
+			<c:set var="pageBean" value="${requestScope.pageBean}"/>
+    <c:if test="${pageBean!=null}">
+
+		<f:formatNumber var="left" value="${(requestScope.pageBean.pageSize-1)/2}" maxFractionDigits="0" pattern="#"/>
+		<f:formatNumber var="right" value="${(requestScope.pageBean.pageSize-1)/2+0.1}" maxFractionDigits="0" pattern="#"/>
+		
+      <c:set var="begin" value="1"/>
+      <c:set var="end" value="${requestScope.pageBean.totalPage}"/>
+
+      <c:if test="${requestScope.pageBean.currentPage>right}">
+		  <c:set var="begin" value="${requestScope.pageBean.currentPage - right}"/>
+	  </c:if>
+      <c:if test="${requestScope.pageBean.currentPage < (requestScope.pageBean.totalPage - left)}">
+		  <c:set var="end" value="${requestScope.pageBean.currentPage+left}"/>
+	  </c:if>
+      <c:if test="${end<requestScope.pageBean.pageSize}">
+		  <c:set var="end" value="${requestScope.pageBean.pageSize}"/>
+	  </c:if>
+      <c:if test="${begin>(end-requestScope.pageBean.pageSize+1)}">
+		  <c:set var="begin" value="${end-requestScope.pageBean.pageSize+1}"/>
+	  </c:if>
+      <c:if test="${end>requestScope.pageBean.totalPage}">
+		  <c:set var="end" value="${requestScope.pageBean.totalPage}"/>
+	  </c:if>
+
+        	<a href="courseTypeAction_findAllByPage.action?pc=1${requestScope.pageBean.param}">[首页]</a>
+
+      <c:if test="${requestScope.pageBean.currentPage > 1}">
+        <a href="courseTypeAction_findAllByPage.action?pc=${requestScope.pageBean.currentPage - 1}${requestScope.pageBean.param}">上一页</a>
+      </c:if>
+      <c:forEach end="${end}" begin="${begin}" var="v">
+
+        <a href="courseTypeAction_findAllByPage.action?pc=${v}${requestScope.pageBean.param}">
+          <c:if test="${requestScope.pageBean.currentPage eq v}">
+			  ${v}
+		  </c:if>
+          <c:if test="${requestScope.pageBean.currentPage != v}">
+			  [${v}]
+		  </c:if>
+        </a>
+      </c:forEach>
+      <c:if test="${requestScope.pageBean.currentPage < requestScope.pageBean.totalPage}">
+        <a href="courseTypeAction_findAllByPage.action?pc=${requestScope.pageBean.currentPage + 1}${requestScope.pageBean.param}">下一页</a>
+      </c:if>
+ </c:if>
+            <a href="courseTypeAction_findAllByPage.action?pc=${requestScope.pageBean.totalPage}${requestScope.pageBean.param}">[尾页]</a>
+        </span>
+    </td>
+  </tr>
+</table>
