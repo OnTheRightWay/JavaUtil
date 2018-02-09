@@ -86,3 +86,58 @@
       <artifactId>mysql-connector-java</artifactId>
       <version>5.1.18</version>
     </dependency>
+
+
+
+
+<!--
+            默认情况下，maven不会将source目录下的
+            xml文件打包
+            只会将resources目录下的xml文件打包
+
+            如果想将source目录下的xml文件也打包
+            则需要配置下面内容
+        -->
+    <resources>
+
+      <!--添加也打包java下的-->
+      <resource>
+        <directory>src/main/java</directory>
+        <includes>
+          <!--要加入的文件的后缀名-->
+          <!--*.properties的*：任意文件-->
+          <!--**/：任意目录下-->
+          <include>**/*.properties</include>
+          <include>**/*.xml</include>
+        </includes>
+        <!-- 是否替换资源中的属性-->
+        <filtering>false</filtering>
+      </resource>
+      <!--默认只打包resources的-->
+      <resource>
+        <directory>src/main/resources</directory>
+        <!--
+            <includes> <include>**/*.properties</include>
+            <include>**/*.xml</include> </includes> <filtering>true</filtering>
+        -->
+      </resource>
+    </resources>
+
+
+
+
+
+
+<!--逆向工程-->
+    <plugins>
+      <plugin>
+        <groupId>org.mybatis.generator</groupId>
+        <artifactId>mybatis-generator-maven-plugin</artifactId>
+        <version>1.3.2</version>
+        <configuration>
+          <verbose>true</verbose>
+          <overwrite>true</overwrite>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
